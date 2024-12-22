@@ -1,0 +1,101 @@
+Name :- Simmy
+G16 SQL & POWER BI
+
+--1.Total number of employees:
+SELECT COUNT(*) FROM EMP;
+
+--2.Total number of departments:
+SELECT COUNT(*) FROM DEPT;
+
+--3.All the employees:
+SELECT * FROM EMP;
+
+--4.All the departments:
+SELECT * FROM DEPT;
+
+--5.Total salary paid for all employees:
+SELECT SUM(SAL) FROM EMP;
+
+--6.Total commission paid to all employees:
+SELECT SUM(COMM) FROM EMP WHERE COMM IS NOT NULL;
+
+--7.Which job titles of the employees get commission paid:
+SELECT DISTINCT JOB FROM EMP WHERE COMM IS NOT NULL;
+
+--8.System date:
+SELECT SYSDATE FROM DUAL;
+
+--9.Average salary paid to all employees:
+SELECT AVG(SAL) FROM EMP;
+
+--10.Number of employees in each department:
+SELECT DEPTNO, COUNT(*) FROM EMP GROUP BY DEPTNO ORDER BY DEPTNO;
+
+--11.Total salary of employees in each department:
+SELECT DEPTNO, SUM(SAL) FROM EMP GROUP BY DEPTNO ORDER BY DEPTNO;
+
+--12.Number of employees under each job title:
+SELECT JOB, COUNT(*) FROM EMP GROUP BY JOB ORDER BY 1;
+
+--13.Average salary for each job title:
+SELECT JOB, AVG(SAL) FROM EMP GROUP BY JOB ORDER BY 1;
+
+--14.Hire day, month, and year for each employee:
+SELECT ENAME, HIREDATE, EXTRACT(DAY FROM HIREDATE) ,
+       EXTRACT(MONTH FROM HIREDATE),
+       EXTRACT(YEAR FROM HIRE_DATE)
+FROM EMP;
+
+--15.Sort employees department-wise:
+SELECT * FROM EMP ORDER BY DEPTNO;
+
+--16.Sort employees based on job titles:
+SELECT * FROM EMP ORDER BY JOB;
+
+--17.Sort employees in descending order of their salaries:
+SELECT * FROM EMP ORDER BY SAL DESC;
+
+--18.Sort employees by department (ascending) and salary (descending):
+SELECT * FROM EMP ORDER BY DEPTNO ASC, SAL DESC;
+
+--19.Employees with 6-character names:
+SELECT * FROM EMP WHERE LENGTH(ENAME) = 6;
+
+--20.Maximum and minimum salary paid:
+SELECT MAX(SAL), MIN(SAL) FROM EMP;
+
+--21.Max, min, avg, and sum of salary for each department:
+SELECT DEPTNO, MAX(SAL),MIN(SAL), AVG(SAL), SUM(SAL)
+FROM EMP
+GROUP BY DEPTNO;
+
+--22.Sort employees by hire date:
+SELECT * FROM EMP ORDER BY HIREDATE;
+
+--23.Employee who joined latest:
+SELECT * FROM EMP WHERE HIREDATE = (SELECT MAX(HIREDATE) FROM EMP);
+
+--24.Oldest employee based on hire date:
+SELECT * FROM EMP WHERE HIREDATE = (SELECT MIN(HIREDATE) FROM EMP);
+
+--25.Sort employees by hire year (descending) and department (ascending):
+SELECT * FROM EMP ORDER BY HIREDATE DESC, DEPTNO ASC;
+
+--26.Employees with salaries ≥ average salary:
+SELECT * FROM EMP WHERE SAL>= (SELECT AVG(SAL) FROM EMP);
+
+--27.Employees with salaries ≤ average salary:
+SELECT * FROM EMP WHERE SAL <= (SELECT AVG(SAL) FROM EMP);
+
+--28.Employees with salaries between 2000 and 4000:
+SELECT * FROM EMP WHERE SAL BETWEEN 2000 AND 4000 ORDER BY SAL;
+
+--29.Employees with the highest and lowest salary:
+SELECT * FROM EMP WHERE SAL = (SELECT MAX(SALARY) FROM EMP)
+UNION
+SELECT * FROM EMP WHERE SAL = (SELECT MIN(SALARY) FROM EMP);
+
+--30.Number of gifts needed for employees joining next month:
+SELECT COUNT(*) AS gifts_needed
+FROM EMP
+WHERE to_char(HIREDATE,'MM')=01;
